@@ -1,0 +1,119 @@
+--- libkml-1.2.0/src/kml/dom/Makefile.am.orig	2012-01-18 17:36:46.875861374 +0100
++++ libkml-1.2.0/src/kml/dom/Makefile.am	2012-01-18 18:40:03.842655177 +0100
+@@ -6,6 +6,7 @@
+ endif
+ 
+ lib_LTLIBRARIES = libkmldom.la
++libkmldom_la_LIBADD = $(top_builddir)/src/kml/base/libkmlbase.la -lexpat
+ libkmldom_la_SOURCES = \
+ 	abstractlatlonbox.cc \
+ 	abstractview.cc \
+--- libkml-1.2.0/src/kml/engine/Makefile.am.orig	2012-01-18 20:05:05.902826013 +0100
++++ libkml-1.2.0/src/kml/engine/Makefile.am	2012-01-18 20:05:32.092826890 +0100
+@@ -36,6 +36,7 @@
+ 	update.cc
+ 
+ libkmlengine_la_LIBADD = \
++	$(top_builddir)/src/kml/dom/libkmldom.la \
+ 	$(top_builddir)/src/kml/base/libkmlbase.la
+ 
+ # These header files will be installed in $(includedir)/kml/engine for use in
+--- libkml-1.2.0/src/kml/xsd/Makefile.am.orig	2012-01-18 17:36:46.885861375 +0100
++++ libkml-1.2.0/src/kml/xsd/Makefile.am	2012-01-18 18:41:50.752658758 +0100
+@@ -6,6 +6,7 @@
+ endif
+ 
+ lib_LTLIBRARIES = libkmlxsd.la
++libkmlxsd_la_LIBADD = $(top_builddir)/src/kml/base/libkmlbase.la
+ libkmlxsd_la_SOURCES = \
+ 	xsd_complex_type.cc \
+ 	xsd_element.cc \
+--- libkml-1.2.0/src/kml/convenience/Makefile.am.orig	2012-01-18 17:36:46.885861375 +0100
++++ libkml-1.2.0/src/kml/convenience/Makefile.am	2012-01-18 18:43:45.442662597 +0100
+@@ -11,6 +11,10 @@
+ 	http_client_test_util.h
+ 
+ lib_LTLIBRARIES = libkmlconvenience.la
++libkmlconvenience_la_LIBADD = \
++	$(top_builddir)/src/kml/engine/libkmlengine.la \
++	$(top_builddir)/src/kml/dom/libkmldom.la \
++	$(top_builddir)/src/kml/base/libkmlbase.la
+ libkmlconvenience_la_SOURCES = \
+ 	atom_util.cc \
+ 	convenience.cc \
+--- libkml-1.2.0/src/kml/regionator/Makefile.am.orig	2012-01-18 17:36:46.882528041 +0100
++++ libkml-1.2.0/src/kml/regionator/Makefile.am	2012-01-18 18:45:17.802665690 +0100
+@@ -7,6 +7,11 @@
+ endif
+ 
+ lib_LTLIBRARIES = libkmlregionator.la
++libkmlregionator_la_LIBADD = \
++	$(top_builddir)/src/kml/convenience/libkmlconvenience.la \
++	$(top_builddir)/src/kml/engine/libkmlengine.la \
++	$(top_builddir)/src/kml/dom/libkmldom.la \
++	$(top_builddir)/src/kml/base/libkmlbase.la
+ libkmlregionator_la_SOURCES = \
+ 	feature_list_region_handler.cc \
+ 	regionator.cc \
+--- libkml-1.2.0/src/kml/Makefile.am.orig	2009-07-23 21:05:48.000000000 +0200
++++ libkml-1.2.0/src/kml/Makefile.am	2012-01-18 18:45:48.796000062 +0100
+@@ -1,5 +1,5 @@
+ # base must be built before engine.
+-SUBDIRS = . base convenience dom engine regionator xsd
++SUBDIRS = . base dom engine convenience regionator xsd
+ 
+ domincludedir = $(includedir)/kml
+ dominclude_HEADERS = dom.h engine.h
+--- libkml-1.2.0/src/swig/Makefile.am.orig	2012-01-18 20:07:59.759498501 +0100
++++ libkml-1.2.0/src/swig/Makefile.am	2012-01-18 20:44:29.316238482 +0100
+@@ -26,6 +26,7 @@
+ libkmlbase_swig_java_la_SOURCES = kmlbase_java.cc
+ libkmlbase_swig_java_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(JAVA_INCLUDE_DIR) -I$(JAVA_INCLUDE_DIR)/$(PLATFORM)
+ libkmlbase_swig_java_la_LIBADD = $(COMMONLIBS)
++libkmlbase_swig_java_la_LDFLAGS = -module -avoid-version
+ kmlbase_java.cc: kmlbase.i
+ 	mkdir -p $(java_package_dir)
+ 	$(SWIG) -c++ $(AM_CPPFLAGS) -java -o kmlbase_java.cc \
+@@ -35,7 +36,7 @@
+ libkmlbase_swig_python_la_SOURCES = kmlbase_python.cc kmlbase.py
+ libkmlbase_swig_python_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(PYTHON_INCLUDE_DIR)
+ libkmlbase_swig_python_la_LIBADD = $(COMMONLIBS)
+-libkmlbase_swig_python_la_LDFLAGS = -dynamiclib -python -lexpat
++libkmlbase_swig_python_la_LDFLAGS = -dynamiclib -python -module -avoid-version -lexpat
+ kmlbase_python.cc: kmlbase.i
+ 	$(SWIG) -c++ $(AM_CPPFLAGS) -python -o kmlbase_python.cc \
+ 	$(top_srcdir)/src/swig/kmlbase.i
+@@ -44,6 +44,7 @@
+ libkmldom_swig_java_la_SOURCES = kmldom_java.cc
+ libkmldom_swig_java_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(JAVA_INCLUDE_DIR) -I$(JAVA_INCLUDE_DIR)/$(PLATFORM)
+ libkmldom_swig_java_la_LIBADD = $(COMMONLIBS)
++libkmldom_swig_java_la_LDFLAGS = -module -avoid-version
+ kmldom_java.cc: kmldom.i
+ 	mkdir -p $(java_package_dir)
+ 	$(SWIG) -c++ $(AM_CPPFLAGS) -java -o kmldom_java.cc \
+@@ -52,7 +53,7 @@
+ libkmldom_swig_python_la_SOURCES = kmldom_python.cc kmldom.py
+ libkmldom_swig_python_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(PYTHON_INCLUDE_DIR)
+ libkmldom_swig_python_la_LIBADD = $(COMMONLIBS)
+-libkmldom_swig_python_la_LDFLAGS = -dynamiclib -python -lexpat
++libkmldom_swig_python_la_LDFLAGS = -dynamiclib -python -module -avoid-version -lexpat
+ kmldom_python.cc: kmldom.i
+ 	$(SWIG) -c++ $(AM_CPPFLAGS) -python -o kmldom_python.cc \
+ 	$(top_srcdir)/src/swig/kmldom.i
+@@ -61,6 +62,7 @@
+ libkmlengine_swig_java_la_SOURCES = kmlengine_java.cc
+ libkmlengine_swig_java_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(JAVA_INCLUDE_DIR) -I$(JAVA_INCLUDE_DIR)/$(PLATFORM)
+ libkmlengine_swig_java_la_LIBADD = $(COMMONLIBS)
++libkmlengine_swig_java_la_LDFLAGS = -module -avoid-version
+ kmlengine_java.cc: kmlengine.i
+ 	mkdir -p $(java_package_dir)
+ 	$(SWIG) -c++ $(AM_CPPFLAGS) -java -o kmlengine_java.cc \
+@@ -69,7 +70,7 @@
+ libkmlengine_swig_python_la_SOURCES = kmlengine_python.cc kmlengine.py
+ libkmlengine_swig_python_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(PYTHON_INCLUDE_DIR)
+ libkmlengine_swig_python_la_LIBADD = $(COMMONLIBS)
+-libkmlengine_swig_python_la_LDFLAGS = -dynamiclib -python -lexpat
++libkmlengine_swig_python_la_LDFLAGS = -dynamiclib -python -module -avoid-version -lexpat
+ kmlengine_python.cc: kmlengine.i
+ 	$(SWIG) -c++ $(AM_CPPFLAGS) -python -o kmlengine_python.cc \
+ 	$(top_srcdir)/src/swig/kmlengine.i
