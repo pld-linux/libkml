@@ -16,6 +16,7 @@ Source0:	http://libkml.googlecode.com/files/%{name}-%{version}.tar.gz
 Patch0:		%{name}-sh.patch
 Patch1:		%{name}-system-libs.patch
 Patch2:		%{name}-link.patch
+Patch3:		%{name}-include.patch
 URL:		http://code.google.com/p/libkml/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.9.6
@@ -28,6 +29,7 @@ BuildRequires:	libstdc++-devel >= 6:4.0
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	python-devel >= 2.3
 BuildRequires:	rpm-pythonprov
+%{?with_java:BuildRequires:	rpm-javaprov}
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	sed >= 4.0
 BuildRequires:	swig >= 1.3.35
@@ -115,6 +117,7 @@ Oparte na SWIG-u wiązania Pythona do bibliotek KML.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # error: ISO C++ 1998 does not support 'long long'
 %{__sed} -i -e 's/ -Werror//' configure.ac $(find . -name Makefile.am | xargs grep -l -e '-Werror')
@@ -127,6 +130,8 @@ Oparte na SWIG-u wiązania Pythona do bibliotek KML.
 %{__automake}
 %configure \
 	%{!?with_java:--disable-java} \
+	%{?with_java:--with-java-include-dir=%{_jvmdir}/java/include} \
+	%{?with_java:--with-java-lib-dir=%{_jvmdir}/java/lib} \
 	%{!?with_static_libs:--disable-static}
 %{__make}
 
