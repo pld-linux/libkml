@@ -10,14 +10,15 @@ Version:	1.2.0
 Release:	1
 License:	BSD
 Group:		Libraries
-#Source0Download: http://code.google.com/p/libkml/downloads/list
+#Source0Download: https://github.com/google/libkml/releases
+#Source0:	https://github.com/google/libkml/archive/release-1.2/%{name}-%{version}.tar.gz
 Source0:	http://libkml.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	25d534437f971bf55a945608e39fea79
 Patch0:		%{name}-sh.patch
 Patch1:		%{name}-system-libs.patch
 Patch2:		%{name}-link.patch
 Patch3:		%{name}-include.patch
-URL:		http://code.google.com/p/libkml/
+URL:		https://github.com/google/libkml
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1:1.9.6
 BuildRequires:	boost-devel >= 1.34.0
