@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	java		# Java binding
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	static_libs	# static libraries
 #
 Summary:	Library to parse, generate and operate on KML
 Summary(pl.UTF-8):	Biblioteka do analizy, generowania i operowania na danych KML
@@ -115,10 +115,10 @@ Oparte na SWIG-u wiązania Pythona do bibliotek KML.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+%patch -P3 -p1
 
 # error: ISO C++ 1998 does not support 'long long'
 %{__sed} -i -e 's/ -Werror//' configure.ac $(find . -name Makefile.am | xargs grep -l -e '-Werror')
@@ -129,6 +129,7 @@ Oparte na SWIG-u wiązania Pythona do bibliotek KML.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+CXXFLAGS="%{rpmcxxflags} -std=c++11"
 %configure \
 	%{!?with_java:--disable-java} \
 	%{?with_java:--with-java-include-dir=%{_jvmdir}/java/include} \

@@ -1,32 +1,32 @@
---- libkml-1.2.0.orig/examples/engine/Makefile.am	2012-01-16 21:24:24.743866045 +0100
-+++ libkml-1.2.0/examples/engine/Makefile.am	2012-01-17 16:37:35.359516135 +0100
+--- libkml-1.2.0/examples/engine/Makefile.am.orig	2025-03-21 22:00:34.528278379 +0100
++++ libkml-1.2.0/examples/engine/Makefile.am	2025-03-21 22:01:01.014801556 +0100
 @@ -1,5 +1,4 @@
 -AM_CPPFLAGS = -I$(top_srcdir)/src \
 -	      -I$(top_srcdir)/third_party/boost_1_34_1
 +AM_CPPFLAGS = -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -ansi -pedantic -fno-rtti
---- libkml-1.2.0.orig/examples/gpx/Makefile.am	2012-01-16 21:24:24.737199379 +0100
-+++ libkml-1.2.0/examples/gpx/Makefile.am	2012-01-17 16:36:46.049514483 +0100
+ AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
+--- libkml-1.2.0/examples/gpx/Makefile.am.orig	2025-03-21 22:00:34.528278379 +0100
++++ libkml-1.2.0/examples/gpx/Makefile.am	2025-03-21 22:01:51.731193468 +0100
 @@ -1,5 +1,4 @@
 -AM_CPPFLAGS = -I$(top_srcdir)/src \
 -	      -I$(top_srcdir)/third_party/boost_1_34_1
 +AM_CPPFLAGS = -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -ansi -pedantic -fno-rtti
---- libkml-1.2.0.orig/examples/gx/Makefile.am	2012-01-16 21:24:24.740532712 +0100
-+++ libkml-1.2.0/examples/gx/Makefile.am	2012-01-17 16:37:24.139515759 +0100
+ AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
+--- libkml-1.2.0/examples/gx/Makefile.am.orig	2025-03-21 22:00:34.551611586 +0100
++++ libkml-1.2.0/examples/gx/Makefile.am	2025-03-21 22:02:18.354382572 +0100
 @@ -1,5 +1,4 @@
 -AM_CPPFLAGS = -I$(top_srcdir)/src \
 -	      -I$(top_srcdir)/third_party/boost_1_34_1
 +AM_CPPFLAGS = -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -ansi -pedantic -fno-rtti
---- libkml-1.2.0.orig/examples/hellonet/Makefile.am	2012-01-16 21:24:24.737199379 +0100
-+++ libkml-1.2.0/examples/hellonet/Makefile.am	2012-01-17 16:36:37.422847527 +0100
+ AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
+--- libkml-1.2.0/examples/hellonet/Makefile.am.orig	2025-03-21 22:00:34.554944901 +0100
++++ libkml-1.2.0/examples/hellonet/Makefile.am	2025-03-21 22:02:43.487579747 +0100
 @@ -1,7 +1,6 @@
  if HAVE_CURL
  AM_CPPFLAGS = -I$(top_srcdir)/src \
@@ -35,7 +35,7 @@
 +	      -I$(top_srcdir)/examples/hellonet
  
  if GCC
- AM_CXXFLAGS = -Wall -ansi -pedantic -fno-rtti
+ AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
 --- libkml-1.2.0.orig/examples/helloworld/Makefile.am	2012-01-16 21:24:24.740532712 +0100
 +++ libkml-1.2.0/examples/helloworld/Makefile.am	2012-01-17 16:37:15.879515482 +0100
 @@ -1,6 +1,5 @@
@@ -55,8 +55,8 @@
  
  noinst_PROGRAMS = countkml createkml checklinks circlegen helloattrs helloenum \
                    hellofeatures hellofolder hellogeometry hellohref hellokmz \
---- libkml-1.2.0.orig/examples/regionator/Makefile.am	2012-01-16 21:24:24.733866045 +0100
-+++ libkml-1.2.0/examples/regionator/Makefile.am	2012-01-17 16:36:26.522847163 +0100
+--- libkml-1.2.0/examples/regionator/Makefile.am.orig	2025-03-21 22:03:22.034037589 +0100
++++ libkml-1.2.0/examples/regionator/Makefile.am	2025-03-21 22:32:29.411237901 +0100
 @@ -1,6 +1,4 @@
 -AM_CPPFLAGS = -I$(top_srcdir)/src \
 -              -I$(top_srcdir)/third_party/boost_1_34_1 \
@@ -64,9 +64,9 @@
 +AM_CPPFLAGS = -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -ansi -pedantic -fno-rtti
---- libkml-1.2.0.orig/examples/xsd/Makefile.am	2012-01-16 21:24:24.740532712 +0100
-+++ libkml-1.2.0/examples/xsd/Makefile.am	2012-01-17 16:37:00.232848292 +0100
+ AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
+--- libkml-1.2.0/examples/xsd/Makefile.am.orig	2025-03-21 22:03:22.037370905 +0100
++++ libkml-1.2.0/examples/xsd/Makefile.am	2025-03-21 22:32:41.884503661 +0100
 @@ -1,6 +1,5 @@
  AM_CPPFLAGS = -I$(top_srcdir)/src \
 -	      -I$(top_srcdir)/examples/xsd \
@@ -74,7 +74,7 @@
 +	      -I$(top_srcdir)/examples/xsd
  
  if GCC
- AM_CXXFLAGS = -Wall -ansi -pedantic -fno-rtti
+ AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
 --- libkml-1.2.0.orig/src/kml/base/Makefile.am	2012-01-16 21:24:24.750532711 +0100
 +++ libkml-1.2.0/src/kml/base/Makefile.am	2012-01-17 16:27:14.232828670 +0100
 @@ -1,7 +1,4 @@
@@ -236,8 +236,8 @@
  
  CLEANFILES = check_PROGRAMS
  
---- libkml-1.2.0.orig/src/kml/convenience/Makefile.am	2012-01-16 21:24:24.757199378 +0100
-+++ libkml-1.2.0/src/kml/convenience/Makefile.am	2012-01-17 16:28:26.796164433 +0100
+--- libkml-1.2.0/src/kml/convenience/Makefile.am.orig	2010-01-14 01:16:31.000000000 +0100
++++ libkml-1.2.0/src/kml/convenience/Makefile.am	2025-03-21 22:35:05.593725121 +0100
 @@ -1,6 +1,4 @@
 -AM_CPPFLAGS = -I$(top_srcdir)/src \
 -	      -I$(top_srcdir)/third_party/boost_1_34_1 \
@@ -245,8 +245,8 @@
 +AM_CPPFLAGS = -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -ansi -pedantic -fno-rtti
-@@ -66,7 +64,7 @@
+ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
+@@ -66,7 +64,7 @@ atom_util_test_LDADD = libkmlconvenience
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -255,7 +255,7 @@
  
  convenience_test_SOURCES = convenience_test.cc
  convenience_test_CXXFLAGS = $(AM_TEST_CXXFLAGS)
-@@ -74,7 +72,7 @@
+@@ -74,7 +72,7 @@ convenience_test_LDADD = libkmlconvenien
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -264,7 +264,7 @@
  
  csv_file_test_SOURCES = csv_file_test.cc
  csv_file_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -82,7 +80,7 @@
+@@ -82,7 +80,7 @@ csv_file_test_LDADD = libkmlconvenience.
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -273,7 +273,7 @@
  
  csv_parser_test_SOURCES = csv_parser_test.cc
  csv_parser_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -90,7 +88,7 @@
+@@ -90,7 +88,7 @@ csv_parser_test_LDADD = libkmlconvenienc
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -282,7 +282,7 @@
  
  element_counter_test_SOURCES = element_counter_test.cc
  element_counter_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -98,7 +96,7 @@
+@@ -98,7 +96,7 @@ element_counter_test_LDADD = libkmlconve
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -291,7 +291,7 @@
  
  feature_list_test_SOURCES = feature_list_test.cc
  feature_list_test_CXXFLAGS = $(AM_TEST_CXXFLAGS)
-@@ -106,7 +104,7 @@
+@@ -106,7 +104,7 @@ feature_list_test_LDADD = libkmlconvenie
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -300,7 +300,7 @@
  
  google_doc_list_test_SOURCES = google_doc_list_test.cc
  google_doc_list_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -114,7 +112,7 @@
+@@ -114,7 +112,7 @@ google_doc_list_test_LDADD = libkmlconve
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -309,7 +309,7 @@
  
  google_maps_data_test_SOURCES = google_maps_data_test.cc
  google_maps_data_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -122,7 +120,7 @@
+@@ -122,7 +120,7 @@ google_maps_data_test_LDADD = libkmlconv
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -318,7 +318,7 @@
  
  google_picasa_web_test_SOURCES = google_picasa_web_test.cc
  google_picasa_web_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -130,7 +128,7 @@
+@@ -130,7 +128,7 @@ google_picasa_web_test_LDADD = libkmlcon
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -327,7 +327,7 @@
  
  google_spreadsheets_test_SOURCES = google_spreadsheets_test.cc
  google_spreadsheets_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -138,7 +136,7 @@
+@@ -138,7 +136,7 @@ google_spreadsheets_test_LDADD = libkmlc
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -336,7 +336,7 @@
  
  gpx_trk_pt_handler_test_SOURCES = gpx_trk_pt_handler_test.cc
  gpx_trk_pt_handler_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -146,13 +144,13 @@
+@@ -146,13 +144,13 @@ gpx_trk_pt_handler_test_LDADD = libkmlco
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
@@ -352,7 +352,7 @@
  
  kmz_check_links_test_SOURCES = kmz_check_links_test.cc
  kmz_check_links_test_CXXFLAGS = -DDATADIR=\"$(DATA_DIR)\" $(AM_TEST_CXXFLAGS)
-@@ -160,6 +158,6 @@
+@@ -160,6 +158,6 @@ kmz_check_links_test_LDADD = libkmlconve
  	$(top_builddir)/src/kml/engine/libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -360,8 +360,8 @@
 +	-lgtest
  
  CLEANFILES = check_PROGRAMS
---- libkml-1.2.0.orig/src/kml/dom/Makefile.am	2012-01-16 21:24:24.747199378 +0100
-+++ libkml-1.2.0/src/kml/dom/Makefile.am	2012-01-17 16:33:18.899507548 +0100
+--- libkml-1.2.0/src/kml/dom/Makefile.am.orig	2010-01-14 01:16:22.000000000 +0100
++++ libkml-1.2.0/src/kml/dom/Makefile.am	2025-03-21 22:35:16.526999224 +0100
 @@ -1,6 +1,4 @@
 -AM_CPPFLAGS= -I$(top_srcdir)/src \
 -	     -I$(top_srcdir)/third_party/boost_1_34_1 \
@@ -369,8 +369,8 @@
 +AM_CPPFLAGS= -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -ansi -pedantic -fno-rtti
-@@ -180,306 +178,306 @@
+ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
+@@ -180,306 +178,306 @@ abstractlatlonbox_test_SOURCES = abstrac
  abstractlatlonbox_test_CXXFLAGS = $(AM_TEST_CXXFLAGS)
  abstractlatlonbox_test_LDADD= libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -728,8 +728,8 @@
 +	-lgtest
  
  CLEANFILES = check_PROGRAMS
---- libkml-1.2.0.orig/src/kml/engine/Makefile.am	2012-01-16 21:24:24.760532712 +0100
-+++ libkml-1.2.0/src/kml/engine/Makefile.am	2012-01-17 16:35:33.619512058 +0100
+--- libkml-1.2.0/src/kml/engine/Makefile.am.orig	2009-10-26 22:45:29.000000000 +0100
++++ libkml-1.2.0/src/kml/engine/Makefile.am	2025-03-21 22:35:30.073592502 +0100
 @@ -1,6 +1,4 @@
 -AM_CPPFLAGS= -I$(top_srcdir)/src \
 -	     -I$(top_srcdir)/third_party/boost_1_34_1 \
@@ -737,8 +737,8 @@
 +AM_CPPFLAGS= -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -ansi -pedantic -fno-rtti
-@@ -129,224 +127,224 @@
+ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
+@@ -129,224 +127,224 @@ bbox_test_CXXFLAGS = $(AM_TEST_CXXFLAGS)
  bbox_test_LDADD = libkmlengine.la \
  	$(top_builddir)/src/kml/dom/libkmldom.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -1041,8 +1041,8 @@
 +	-lgtest
  
  CLEANFILES = check_PROGRAMS
---- libkml-1.2.0.orig/src/kml/xsd/Makefile.am	2012-01-16 21:24:24.753866044 +0100
-+++ libkml-1.2.0/src/kml/xsd/Makefile.am	2012-01-17 16:36:07.992846541 +0100
+--- libkml-1.2.0/src/kml/xsd/Makefile.am.orig	2009-07-23 21:05:48.000000000 +0200
++++ libkml-1.2.0/src/kml/xsd/Makefile.am	2025-03-21 22:37:59.352783788 +0100
 @@ -1,6 +1,4 @@
 -AM_CPPFLAGS = -I$(top_srcdir)/src \
 -              -I$(top_srcdir)/third_party/boost_1_34_1 \
@@ -1050,8 +1050,8 @@
 +AM_CPPFLAGS = -I$(top_srcdir)/src
  
  if GCC
- AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -ansi -pedantic -fno-rtti
-@@ -49,54 +47,54 @@
+ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
+@@ -49,54 +47,54 @@ xsd_complex_type_test_SOURCES = xsd_comp
  xsd_complex_type_test_CXXFLAGS = $(AM_TEST_CXXFLAGS)
  xsd_complex_type_test_LDADD = libkmlxsd.la \
  	$(top_builddir)/src/kml/base/libkmlbase.la \
@@ -1226,3 +1226,12 @@
  EXTRA_DIST = \
  	expat.win32/expat.h \
  	expat.win32/expat_external.h \
+--- libkml-1.2.0/src/kml/base/Makefile.am.orig	2025-03-21 22:38:22.332659295 +0100
++++ libkml-1.2.0/src/kml/base/Makefile.am	2025-03-22 07:16:59.930747462 +0100
+@@ -1,5 +1,4 @@
+-AM_CPPFLAGS = -I$(top_srcdir)/src \
+-              -I$(top_srcdir)/third_party/zlib-1.2.3/contrib
++AM_CPPFLAGS = -I$(top_srcdir)/src
+ 
+ if GCC
+ AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
