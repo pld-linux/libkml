@@ -6,40 +6,40 @@
 Summary:	Library to parse, generate and operate on KML
 Summary(pl.UTF-8):	Biblioteka do analizy, generowania i operowania na danych KML
 Name:		libkml
-Version:	1.2.0
+Version:	1.3.0
 Release:	1
 License:	BSD
 Group:		Libraries
-#Source0Download: https://github.com/google/libkml/releases
-#Source0:	https://github.com/google/libkml/archive/release-1.2/%{name}-%{version}.tar.gz
-Source0:	http://libkml.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	25d534437f971bf55a945608e39fea79
-Patch0:		%{name}-sh.patch
-Patch1:		%{name}-system-libs.patch
-Patch2:		%{name}-link.patch
-Patch3:		%{name}-include.patch
-URL:		https://github.com/google/libkml
-BuildRequires:	autoconf >= 2.59
-BuildRequires:	automake >= 1:1.9.6
-BuildRequires:	boost-devel >= 1.34.0
+#Source0Download: https://github.com/libkml/libkml/releases
+Source0:	https://github.com/libkml/libkml/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	e663141e9ebd480538b25d226e1b2979
+Patch0:		%{name}-python.patch
+Patch1:		%{name}-minizip-git.patch
+Patch2:		%{name}-minizip-nocrypt.patch
+Patch3:		%{name}-pc.patch
+URL:		https://github.com/libkml/libkml
+BuildRequires:	boost-devel >= 1.44.0
+BuildRequires:	cmake >= 2.8
 BuildRequires:	curl-devel >= 7.12.3
 BuildRequires:	expat-devel >= 2.0
-BuildRequires:	gtest-devel
+BuildRequires:	gtest-devel >= 1.7.0
 %{?with_java:BuildRequires:	jdk >= 1.5}
-BuildRequires:	libstdc++-devel >= 6:4.0
+BuildRequires:	libstdc++-devel >= 6:4.5
 BuildRequires:	libtool >= 2:1.5
-BuildRequires:	python-devel >= 2.3
+BuildRequires:	minizip-devel >= 1.2.8
+BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	rpm-pythonprov
 %{?with_java:BuildRequires:	rpm-javaprov}
 BuildRequires:	rpmbuild(macros) >= 1.219
 BuildRequires:	sed >= 4.0
-BuildRequires:	swig >= 1.3.35
-BuildRequires:	swig-python >= 1.3.35
+BuildRequires:	swig >= 2.0
+BuildRequires:	swig-python >= 2.0
 BuildRequires:	uriparser-devel >= 0.7.5
-BuildRequires:	zlib-devel >= 1.2.3
+BuildRequires:	zlib-devel >= 1.2.8
 Requires:	expat >= 2.0
+Requires:	minizip >= 1.2.8
 Requires:	uriparser >= 0.7.5
-Requires:	zlib >= 1.2.3
+Requires:	zlib >= 1.2.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -64,10 +64,11 @@ Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek KML
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	expat-devel >= 2.0
-Requires:	boost-devel >= 1.34.0
-Requires:	libstdc++-devel >= 6:4.0
+Requires:	boost-devel >= 1.44.0
+Requires:	libstdc++-devel >= 6:4.5
+Requires:	minizip-devel >= 1.2.8
 Requires:	uriparser-devel >= 0.7.5
-Requires:	zlib-devel >= 1.2.3
+Requires:	zlib-devel >= 1.2.8
 
 %description devel
 Header files for KML libraries.
@@ -120,37 +121,43 @@ Oparte na SWIG-u wiązania Pythona do bibliotek KML.
 %patch -P2 -p1
 %patch -P3 -p1
 
-# error: ISO C++ 1998 does not support 'long long'
-%{__sed} -i -e 's/ -Werror//' configure.ac $(find . -name Makefile.am | xargs grep -l -e '-Werror')
-
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-CXXFLAGS="%{rpmcxxflags} -std=c++11"
-%configure \
-	%{!?with_java:--disable-java} \
-	%{?with_java:--with-java-include-dir=%{_jvmdir}/java/include} \
-	%{?with_java:--with-java-lib-dir=%{_jvmdir}/java/lib} \
-	%{!?with_static_libs:--disable-static}
+%if %{with static_libs}
+install -d build-static
+cd build-static
+%cmake .. \
+	-DBUILD_SHARED_LIBS=OFF \
+	-DWITH_SWIG=OFF
+
+%{__make}
+cd ..
+%endif
+
+install -d build
+cd build
+%cmake .. \
+	-DJNI_INSTALL_DIR=%{_libdir}/libkml \
+	-DPYTHON_EXECUTABLE=%{__python} \
+	-DWITH_JAVA=%{__true_false java} \
+	-DWITH_PYTHON=ON \
+	-DWITH_SWIG=ON
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%if %{with static_libs}
+%{__make} -C build-static install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-%if %{with java}
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libkml/libkml*_swig_java.*a
 %endif
+
+%{__make} -C build install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libkml/libkml*_swig_python.*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -160,21 +167,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING ChangeLog README
+%doc AUTHORS COPYING ChangeLog README.md
 %attr(755,root,root) %{_libdir}/libkmlbase.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmlbase.so.0
+%attr(755,root,root) %ghost %{_libdir}/libkmlbase.so.1
 %attr(755,root,root) %{_libdir}/libkmlconvenience.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmlconvenience.so.0
+%attr(755,root,root) %ghost %{_libdir}/libkmlconvenience.so.1
 %attr(755,root,root) %{_libdir}/libkmldom.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmldom.so.0
+%attr(755,root,root) %ghost %{_libdir}/libkmldom.so.1
 %attr(755,root,root) %{_libdir}/libkmlengine.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmlengine.so.0
-%attr(755,root,root) %{_libdir}/libkmlminizip.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmlminizip.so.0
+%attr(755,root,root) %ghost %{_libdir}/libkmlengine.so.1
 %attr(755,root,root) %{_libdir}/libkmlregionator.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmlregionator.so.0
+%attr(755,root,root) %ghost %{_libdir}/libkmlregionator.so.1
 %attr(755,root,root) %{_libdir}/libkmlxsd.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmlxsd.so.0
+%attr(755,root,root) %ghost %{_libdir}/libkmlxsd.so.1
 
 %files devel
 %defattr(644,root,root,755)
@@ -182,17 +187,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkmlconvenience.so
 %attr(755,root,root) %{_libdir}/libkmldom.so
 %attr(755,root,root) %{_libdir}/libkmlengine.so
-%attr(755,root,root) %{_libdir}/libkmlminizip.so
 %attr(755,root,root) %{_libdir}/libkmlregionator.so
 %attr(755,root,root) %{_libdir}/libkmlxsd.so
-%{_libdir}/libkmlbase.la
-%{_libdir}/libkmlconvenience.la
-%{_libdir}/libkmldom.la
-%{_libdir}/libkmlengine.la
-%{_libdir}/libkmlminizip.la
-%{_libdir}/libkmlregionator.la
-%{_libdir}/libkmlxsd.la
 %{_includedir}/kml
+%{_pkgconfigdir}/libkml.pc
+%{_libdir}/cmake/libkml
 
 %if %{with static_libs}
 %files static
@@ -201,7 +200,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkmlconvenience.a
 %{_libdir}/libkmldom.a
 %{_libdir}/libkmlengine.a
-%{_libdir}/libkmlminizip.a
 %{_libdir}/libkmlregionator.a
 %{_libdir}/libkmlxsd.a
 %endif

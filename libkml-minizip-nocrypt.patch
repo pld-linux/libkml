@@ -1,0 +1,11 @@
+--- libkml-1.3.0/src/kml/base/contrib/minizip/unzip.c.orig	2015-12-21 18:23:05.000000000 +0100
++++ libkml-1.3.0/src/kml/base/contrib/minizip/unzip.c	2025-03-22 09:13:02.733026724 +0100
+@@ -42,7 +42,7 @@ woven in by Terry Thorsen 1/2003.
+ #include <zlib.h> //RR
+ #include "unzip.h"
+ #include "iomem_simple.h"
+-#undef NOUNCRYPT
++#define NOUNCRYPT
+ 
+ #ifdef STDC
+ #  include <stddef.h>

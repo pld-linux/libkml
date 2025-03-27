@@ -1,0 +1,40 @@
+From effc0b816531f769e83d5650785778d40f2043b4 Mon Sep 17 00:00:00 2001
+From: Rashad <mohammedrashadkm@gmail.com>
+Date: Sun, 27 Dec 2015 18:07:58 +0100
+Subject: [PATCH] use correct type in struct as in minizip
+
+---
+ src/kml/base/contrib/minizip/unzip.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
+
+diff --git a/src/kml/base/contrib/minizip/unzip.c b/src/kml/base/contrib/minizip/unzip.c
+index a062863a..b4c1b001 100644
+--- a/src/kml/base/contrib/minizip/unzip.c
++++ b/src/kml/base/contrib/minizip/unzip.c
+@@ -148,10 +148,13 @@ typedef struct
+     file_in_zip_read_info_s* pfile_in_zip_read; /* structure about the current
+                                         file if we are decompressing it */
+     int encrypted;
+-#    ifndef NOUNCRYPT
+-    unsigned long keys[3];     /* keys defining the pseudo-random sequence */
+-    const z_crc_t* pcrc_32_tab;
+-#    endif
++  
++#ifndef NOUNCRYPT
++  unsigned long keys[3];     /* keys defining the pseudo-random sequence */
++  /*  const z_crc_t* pcrc_32_tab; */
++  const unsigned long* pcrc_32_tab;
++#endif
++  
+ } unz_s;
+ 
+ void init_unz_s(unz_s* un)
+@@ -1197,7 +1200,7 @@ extern int ZEXPORT libkml_unzOpenCurrentFile3 (file, method, level, raw, passwor
+     if (password != NULL)
+     {
+         int i;
+-        s->pcrc_32_tab = get_crc_table();
++	s->pcrc_32_tab = (const unsigned long*)get_crc_table();	
+         init_keys(password,s->keys,s->pcrc_32_tab);
+         if (ZSEEK(s->z_filefunc, s->filestream,
+                   s->pfile_in_zip_read->pos_in_zipfile +

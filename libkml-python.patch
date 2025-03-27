@@ -1,0 +1,11 @@
+--- libkml-1.3.0/src/swig/CMakeLists.txt.orig	2015-12-21 18:23:05.000000000 +0100
++++ libkml-1.3.0/src/swig/CMakeLists.txt	2025-03-22 08:07:26.674350184 +0100
+@@ -10,7 +10,7 @@ if(WITH_PYTHON)
+ 
+   if(NOT DEFINED PYTHON_INSTALL_DIR)
+     execute_process(COMMAND
+-      ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(True)"
++      ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(plat_specific=True, prefix='/usr'))"
+       OUTPUT_VARIABLE PYTHON_INSTALL_DIR
+       OUTPUT_STRIP_TRAILING_WHITESPACE )
+   endif(NOT DEFINED PYTHON_INSTALL_DIR)
