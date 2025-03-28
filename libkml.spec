@@ -127,6 +127,8 @@ install -d build-static
 cd build-static
 %cmake .. \
 	-DBUILD_SHARED_LIBS=OFF \
+	-DCMAKE_INSTALL_DIR:PATH=%{_lib}/cmake/libkml \
+	-DLIB_INSTALL_DIR:PATH=%{_lib} \
 	-DWITH_SWIG=OFF
 
 %{__make}
@@ -136,7 +138,9 @@ cd ..
 install -d build
 cd build
 %cmake .. \
-	-DJNI_INSTALL_DIR=%{_libdir}/libkml \
+	-DCMAKE_INSTALL_DIR:PATH=%{_lib}/cmake/libkml \
+	-DJNI_INSTALL_DIR:PATH=%{_libdir}/libkml \
+	-DLIB_INSTALL_DIR:PATH=%{_lib} \
 	-DPYTHON_EXECUTABLE=%{__python} \
 	-DWITH_JAVA=%{__true_false java} \
 	-DWITH_PYTHON=ON \
